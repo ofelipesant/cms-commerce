@@ -6,7 +6,7 @@ export const CommerceContextProvider = ({children}) => {
     const [products, setProducts] = useState()
     const [orders, setOrders] = useState([])
     const [totalPrice, setTotalPrice] = useState()
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState([{}])
 
 
     return(
@@ -18,7 +18,7 @@ export const CommerceContextProvider = ({children}) => {
         totalPrice,
         setTotalPrice,
         cart,
-        setCart
+        setCart,
        }}>
         {children}
        </commerceContext.Provider>
