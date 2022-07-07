@@ -8,6 +8,7 @@ export default function CartComponent(){
     return(
         <div className="cart-component">
            <MdShoppingCart/>
+           <span>{cart.length}</span>
         </div>
     )
 }

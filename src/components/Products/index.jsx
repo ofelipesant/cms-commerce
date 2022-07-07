@@ -20,22 +20,33 @@ export default function Products(){
     const { cart, setCart, products, setProducts } = useContext(commerceContext)
     const { data } = useQuery(GET_PRODUCTS)
      
+    const add = (product) => () => {
+        addToCart(product)
+    } 
+
+    const addToCart = (product) => {
+        //criação de uma constante e fazendo o spread com o state do carrinho
+        const selectProd = [...cart]
+
+        //push do produto para dentro da array, pois não é possível manipular um estado diretamente com as funções de array
+        selectProd.push(product)
+
+        window.localStorage.setItem('cart', JSON.stringify(selectProd)) 
+
+        //setando o cart com o array já modificado
+        setCart(selectProd) 
+    }
+    
     useEffect(() => {
         setProducts(data)  
     },[data])
-    
-    const addToCart = (product) => {
-        const selectProd = cart
-        selectProd.push(product)
-        setCart(...selectProd)
-        
-        console.log(cart)
-        
-    }
 
-    const add = (product) => () => {
-        addToCart(product)
-    }
+    useEffect(() => {
+        const cartStorage = window.localStorage.getItem('cart')
+        if(cartStorage){
+            setCart(JSON.parse(cartStorage))
+        }
+    },[])
 
     return(
         <main>
@@ -51,10 +62,11 @@ export default function Products(){
                                 <p className="product-description">{element.description}</p>
                                 <h3 className="product-price">{element.price}</h3>
                             </div>
-                            <button onClick={add(element)}>PUTA MERDA</button>
+                            <button onClick={add(element)}>Adicionar ao carrinho</button>
                         </div>
                     )
                 })} 
+
             </section>
         </main>
     )
