@@ -3,9 +3,10 @@ import { useContext, useEffect } from "react"
 import Cabecalho from "../../components/Cabecalho"
 import { TbTrash } from 'react-icons/tb'
 import './cart.sass'
+import OrderCheckout from "../../components/OrderCheckout"
 
 export default function Cart() {
-    const { cart, setCart, totalPrice, setTotalPrice } = useContext(commerceContext)
+    const { cart, setCart, setTotalPrice } = useContext(commerceContext)
 
     const remove = (index) => () => {
         removeToCart(index)
@@ -49,7 +50,7 @@ export default function Cart() {
         if(cart.length > 0){
             getTotalPrice()
         }
-        
+        console.log(cart)
     }, [cart])
 
     return (
@@ -76,11 +77,7 @@ export default function Cart() {
                             )
                         })}
                     </div>
-                    <div className="confirm-order">
-                        <label className="total-label">Valor total:</label>
-                        <p className="total-price">R${totalPrice}</p>
-                        <button className="confirm-order-btn">FINALIZAR PEDIDO</button>
-                    </div>
+                    <OrderCheckout/>
                 </div>
             </section>
         </>
