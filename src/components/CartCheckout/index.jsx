@@ -1,10 +1,11 @@
 import { commerceContext } from "../../contexts/commerceContext"
 import { useContext, useEffect } from "react"
 import { TbTrash } from 'react-icons/tb'
+import OrderCheckout from "../OrderCheckout"
 import './cart.sass'
 
 export default function CartCheckout(){
-    const { cart, setCart, totalPrice, setTotalPrice } = useContext(commerceContext)
+    const { cart, setCart, setTotalPrice } = useContext(commerceContext)
 
     const remove = (index) => () => {
         removeToCart(index)
@@ -76,11 +77,7 @@ export default function CartCheckout(){
                             )
                         })}
                     </div>
-                    <div className="confirm-order">
-                        <label className="total-label">Valor total:</label>
-                        <p className="total-price">R${totalPrice}</p>
-                        <button className="confirm-order-btn">FINALIZAR PEDIDO</button>
-                    </div>
+                    <OrderCheckout/>
                 </div>
             </section>
     )

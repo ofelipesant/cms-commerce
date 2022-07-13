@@ -4,7 +4,7 @@ import { gql, useMutation } from "@apollo/client"
 import "./order-checkout.sass"
 
 const POST_ORDER = gql`
-  mutation createOrder($products:Array!, $totalPrice:Number!){
+  mutation createOrder($products:any!, $totalPrice:Number!){
       createOrder(data: {products: $products, totalPrice: $totalPrice})
   }
 `
