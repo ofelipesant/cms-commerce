@@ -4,26 +4,25 @@ import { gql, useMutation } from "@apollo/client"
 import "./order-checkout.sass"
 
 const POST_ORDER = gql`
-  mutation createOrder($products:any!, $totalPrice:Number!){
-      createOrder(data: {products: $products, totalPrice: $totalPrice})
+  mutation createOrder($products:[String], $totalPrice:Float){
+      createOrder(
+        data: {
+          products: $products, totalPrice: $totalPrice
+        })
   }
 `
 
-export default function OrderCheckout() {
-  const { totalPrice, cart } = useContext(commerceContext)
-  const [createOrder] = useMutation(POST_ORDER)
-
+export default function OrderCheckout(props) {
+  const { cart } = props
+  const { totalPrice } = useContext(commerceContext)
+  const [createOrder, { data }] = useMutation(POST_ORDER)
+ 
   const handleOrder = () => {
-    createOrder({variables:{
-      products: cart,
-      totalPrice: totalPrice
+    createOrder({variables: {
+        products: cart,
+        totalPrice: totalPrice
     }})
   }
-
-  useEffect(() => {
-    console.log("está vindo do checkout", cart)
-    console.log("está vindo do checkout", totalPrice)
-  }, [cart, totalPrice]);
 
   return (
     <div className="confirm-order">

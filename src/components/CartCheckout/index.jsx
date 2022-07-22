@@ -77,7 +77,7 @@ export default function CartCheckout(){
                             )
                         })}
                     </div>
-                    <OrderCheckout/>
+                    <OrderCheckout cart={cart}/>
                 </div>
             </section>
     )

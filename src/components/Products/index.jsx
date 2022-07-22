@@ -5,6 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 const GET_PRODUCTS = gql`
     query{
         products{
+            id
             name
             description
             price
@@ -51,9 +52,9 @@ export default function Products(){
     return(
         <main>
             <section className="products-list">
-                {products && products.products.map((element, index) => {
+                {products && products.products.map((element) => {
                     return(
-                        <div key={index} className="product-card">
+                        <div key={element.id} className="product-card">
                             <div className="product-image-container">
                                 <img src={element.image[0].url} alt="product-image" className="product-image" />
                             </div>
