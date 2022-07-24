@@ -1,20 +1,19 @@
-import { useContext, useEffect } from "react"
-import { commerceContext } from "../../contexts/commerceContext"
 import { gql, useMutation } from "@apollo/client"
 import "./order-checkout.sass"
 
 const POST_ORDER = gql`
-  mutation createOrder($products:[String], $totalPrice:Float){
+  mutation createOrder($id:[String], $totalPrice:Float){
       createOrder(
-        data: {
-          products: $products, totalPrice: $totalPrice
-        })
+        data:{
+          product: $id,
+          totalPrice: $totalPrice
+        }
+      )
   }
 `
 
 export default function OrderCheckout(props) {
-  const { cart } = props
-  const { totalPrice } = useContext(commerceContext)
+  const { cart, totalPrice } = props
   const [createOrder, { data }] = useMutation(POST_ORDER)
  
   const handleOrder = () => {

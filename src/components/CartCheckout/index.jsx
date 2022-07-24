@@ -5,7 +5,7 @@ import OrderCheckout from "../OrderCheckout"
 import './cart.sass'
 
 export default function CartCheckout(){
-    const { cart, setCart, setTotalPrice } = useContext(commerceContext)
+    const { cart, setCart, setTotalPrice, totalPrice, cartIds, setCartIds } = useContext(commerceContext)
 
     const remove = (index) => () => {
         removeToCart(index)
@@ -25,35 +25,48 @@ export default function CartCheckout(){
         setCart(cartSpliced)
     }
 
-    const getTotalPrice = () => {
-        const copyCart = [...cart]
-        const cartPrices = []
-
-        /*
-        repetição para enviar para a const copyCart apenas os preços de cada elemento do estado,
-        criando uma array apenas com os preços
-        */
-        copyCart.forEach((element) => {
-            cartPrices.push(element.price)
-        })
-
-        //reduce para somar cada elemento da array e retornar o valor final
-         const total = cartPrices.reduce((soma, index) => {
-            return soma + index
-        }) 
-        
-        setTotalPrice(total.toFixed(2))
-    }
-
     useEffect(() => {
         const cartStorage = window.localStorage.getItem('cart')
         setCart(JSON.parse(cartStorage))
     }, [])
 
     useEffect(() => {
+        const getTotalPrice = () => {
+            const copyCart = [...cart]
+            const cartPrices = []
+    
+            /*
+            repetição para enviar para a const copyCart apenas os preços de cada elemento do estado,
+            criando uma array apenas com os preços
+            */
+            copyCart.forEach((element) => {
+                cartPrices.push(element.price)
+            })
+    
+            //reduce para somar cada elemento da array e retornar o valor final
+             const total = cartPrices.reduce((soma, index) => {
+                return soma + index
+            }) 
+            setTotalPrice(total.toFixed(2))
+        }
+
         if(cart.length > 0){
             getTotalPrice()
         }      
+    }, [cart])
+
+    useEffect(() => {
+        const getCartIds = () => {
+            const copyCart = [...cart]
+            const Ids = []
+            
+            copyCart.forEach((element) => {
+                Ids.push(element.id)
+            })
+    
+            setCartIds(Ids)
+        }   
+        getCartIds()
     }, [cart])
 
     return(
@@ -77,7 +90,7 @@ export default function CartCheckout(){
                             )
                         })}
                     </div>
-                    <OrderCheckout cart={cart}/>
+                    <OrderCheckout cart={cartIds} totalPrice={totalPrice}/>
                 </div>
             </section>
     )

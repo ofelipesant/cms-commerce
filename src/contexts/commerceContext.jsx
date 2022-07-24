@@ -7,6 +7,7 @@ export const CommerceContextProvider = ({children}) => {
     const [orders, setOrders] = useState([])
     const [totalPrice, setTotalPrice] = useState([])
     const [cart, setCart] = useState([])
+    const [cartIds, setCartIds] = useState([])
 
 
     return(
@@ -19,6 +20,8 @@ export const CommerceContextProvider = ({children}) => {
         setTotalPrice,
         cart,
         setCart,
+        cartIds,
+        setCartIds
        }}>
         {children}
        </commerceContext.Provider>
